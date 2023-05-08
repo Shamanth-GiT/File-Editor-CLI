@@ -8,14 +8,10 @@ fn main() {
 
     let query = &args[1];
 
-    if query == "R"{
-        let contents = lib::read_file(&args);
-        println!("{}", contents);
-    }
-    if query == "C"{
-        lib::create_file(&args);
-    }
-    if query == "W" {
-        lib::write_to_file(&args);
+    match query.as_str(){
+        "R" => lib::read_file(&args),
+        "W" => lib::write_to_file(&args),
+        "C" => lib::create_file(&args),
+        _ => println!("something went wrong")
     }
 }

@@ -4,7 +4,6 @@ use std::io::Write;
 use std::path::Path;
 
 pub fn create_file(args: &[String]) -> (){
-    let query = &args[1];
     let filename = &args[2];
 
     fs::File::create(filename)
@@ -13,11 +12,11 @@ pub fn create_file(args: &[String]) -> (){
     println!("File has been created with the name: {}", filename);   
 }
 
-pub fn read_file(args: &[String]) -> String{
+pub fn read_file(args: &[String]) -> (){
     let filename = &args[2];
     let contents = fs::read_to_string(filename)
         .expect("something went wrong with opening the file");
-    contents
+    println!("{}", contents);
 }
 
 pub fn write_to_file(args: &[String]) -> (){
