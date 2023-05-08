@@ -21,7 +21,7 @@ pub fn read_file(args: &[String]) -> (){
 
 pub fn write_to_file(args: &[String]) -> (){
     let filename: &String = &args[2];
-    let mut rs:bool=true;
+    let rs:bool;
     rs = Path::new(filename).exists();
 
     println!("Please include the message you would like to write to {}", filename);
@@ -43,4 +43,28 @@ pub fn write_to_file(args: &[String]) -> (){
         file.write(msg.as_bytes()).expect("writing failed");
     }
     println!("message appended to file");
+}
+
+pub fn find_all_instances(args: &[String]) -> (){
+    let filename = &args[2];
+    let word = &args[3];
+    let contents = fs::read_to_string(filename)
+        .expect("something went wrong with opening the file");
+    let v: Vec<_> = contents.match_indices(word).collect();
+    println!("{:?}", v);
+}
+
+pub fn size(args: &[String]) -> (){
+    let filename = &args[2];
+    let file = fs::File::open(filename)
+        .expect("something went wrong when trying to open the file");
+    let size = file.metadata().unwrap().len();
+
+    println!("{} is {} bytes", filename, size);
+}
+
+pub fn remove_file(args: &[String]) -> (){
+    let filename = &args[2];
+    fs::remove_file(filename).expect("something went wrong with deleting the file");
+    println!("{} was removed.", filename);
 }
