@@ -2,6 +2,8 @@ use std::fs; // used for file system functionalities
 use std::io;
 use std::io::Write;
 use std::path::Path;
+use std::io::prelude::*;
+use std::io::SeekFrom;
 
 pub fn create_file(args: &[String]) -> (){
     let filename = &args[2];
@@ -21,8 +23,7 @@ pub fn read_file(args: &[String]) -> (){
 
 pub fn write_to_file(args: &[String]) -> (){
     let filename: &String = &args[2];
-    let rs:bool;
-    rs = Path::new(filename).exists();
+    let rs:bool = Path::new(filename).exists();
 
     println!("Please include the message you would like to write to {}", filename);
     let mut msg = String::new();
@@ -43,6 +44,33 @@ pub fn write_to_file(args: &[String]) -> (){
         file.write(msg.as_bytes()).expect("writing failed");
     }
     println!("message appended to file");
+}
+
+pub fn over_write_content(args: &[String]) -> (){
+    let filename = &args[2];
+    let rs:bool = Path::new(filename).exists();
+
+    println!("Please include the message you would like to write to {}", filename);
+    let mut msg = String::new();
+    io::stdin().read_line(&mut msg).unwrap();
+
+    println!("Please also include the index at which you would like to start writing");
+    let num:u64;
+    let mut input = String::new();
+    io::stdin().read_line(&mut input).unwrap();
+    num = input.trim().parse().unwrap();
+    
+    if rs == true{
+        let mut file = fs::OpenOptions::new()
+        .read(true)
+        .write(true)
+        .create(true)
+        .open(filename)
+        .unwrap();
+        
+        file.seek(SeekFrom::Start(num)).unwrap();
+        file.write(msg.as_bytes()).expect("failed to write to file");
+    }
 }
 
 pub fn find_all_instances(args: &[String]) -> (){

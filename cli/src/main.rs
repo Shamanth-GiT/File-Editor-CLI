@@ -8,6 +8,10 @@ fn main() {
 
     let query = &args[1];
 
+    /*TODO:
+        - Include a man page
+        - Functionality for overwriting
+    */
     match query.as_str(){
         "R" => lib::read_file(&args),
         "W" => lib::write_to_file(&args),
@@ -15,6 +19,7 @@ fn main() {
         "find" => lib::find_all_instances(&args),
         "size" => lib::size(&args),
         "rm" => lib::remove_file(&args),
+        "oW" => lib::over_write_content(&args),
         _ => println!("something went wrong")
     }
 }
