@@ -25,7 +25,8 @@ First we will need to change directory into our program: `cd cli`
 | cargo run size `<filename>` |finds the size of a file|
 | cargo run rm `<filename>` |removes/deletes a file|
 | cargo run oW `<filename>` |overwrites contents of a file with user defined location|
-| cargo run man |overwrites contents of a file with user defined location|
+| cargo run man |presents the manual|
+| cargo run findAcr `<filename>` `<query>` |finds a word across multiple files given an input file|
 
 Note that **`rustup`** needs to be installed on the device before these commands can be executed.
 
