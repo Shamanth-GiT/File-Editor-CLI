@@ -19,6 +19,7 @@ fn main() {
         "rm" => lib::remove_file(&args),
         "oW" => lib::over_write_content(&args),
         "man" => lib::man_page(),
+        "findAcr" => lib::finder_across_all(&args),
         _ => println!("something went wrong, please check the man page with: cargo run man")
     }
 }

@@ -79,7 +79,7 @@ pub fn find_all_instances(args: &[String]) -> (){
     let contents = fs::read_to_string(filename)
         .expect("something went wrong with opening the file");
     let v: Vec<_> = contents.match_indices(word).collect();
-    println!("{:?}", v);
+    println!("{:?}, {} instances", v, v.len());
 }
 
 pub fn size(args: &[String]) -> (){
@@ -106,4 +106,28 @@ pub fn man_page() -> (){
     println!("cargo run rm <filename>: removes/deletes a file");
     println!("cargo run oW <filename>: overwrites contents of a file with user defined location");
     println!("cargo run man: overwrites contents of a file with user defined location");
+}
+
+/*
+    (1) Read the input file.
+    (2) Read the files with file names included in the input file.
+    (3) Find word in files.
+    (4) Print the word with indexes of files it is present in.
+ */
+pub fn finder_across_all(args: &[String]) -> (){
+    let filename = &args[2];
+    let word = &args[3];
+    let contents = fs::read_to_string(filename)
+        .expect("something went wrong with opening the file");
+    let mut i = 0;
+    print!("{}: ", word);
+    for file in contents.split_whitespace(){
+        let in_contents = fs::read_to_string(file)
+            .expect("something went wrong with opening the file");
+        let v: Vec<_> = in_contents.match_indices(word).collect();
+        if v.len() > 0 {
+            print!("{} ", i);
+        }
+        i+=1;
+    }
 }
