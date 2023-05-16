@@ -5,8 +5,8 @@ use std::path::Path;
 use std::io::prelude::*;
 use std::io::SeekFrom;
 
-pub fn create_file(args: &[String]) -> (){
-    let filename = &args[2];
+pub fn create_file(args: &[&str]) -> (){
+    let filename = &args[1];
 
     fs::File::create(filename)
             .expect("something went wrong with creating the file ");
@@ -14,15 +14,15 @@ pub fn create_file(args: &[String]) -> (){
     println!("File has been created with the name: {}", filename);   
 }
 
-pub fn read_file(args: &[String]) -> (){
-    let filename = &args[2];
+pub fn read_file(args: &[&str]) -> (){
+    let filename = &args[1];
     let contents = fs::read_to_string(filename)
         .expect("something went wrong with opening the file");
     println!("{}", contents);
 }
 
-pub fn write_to_file(args: &[String]) -> (){
-    let filename: &String = &args[2];
+pub fn write_to_file(args: &[&str]) -> (){
+    let filename: &&str = &args[1];
     let rs:bool = Path::new(filename).exists();
 
     println!("Please include the message you would like to write to {}", filename);
@@ -46,8 +46,8 @@ pub fn write_to_file(args: &[String]) -> (){
     println!("message appended to file");
 }
 
-pub fn over_write_content(args: &[String]) -> (){
-    let filename = &args[2];
+pub fn over_write_content(args: &[&str]) -> (){
+    let filename = &args[1];
     let rs:bool = Path::new(filename).exists();
 
     println!("Please include the message you would like to write to {}", filename);
@@ -73,17 +73,17 @@ pub fn over_write_content(args: &[String]) -> (){
     }
 }
 
-pub fn find_all_instances(args: &[String]) -> (){
-    let filename = &args[2];
-    let word = &args[3];
+pub fn find_all_instances(args: &[&str]) -> (){
+    let filename = &args[1];
+    let word = &args[2];
     let contents = fs::read_to_string(filename)
         .expect("something went wrong with opening the file");
     let v: Vec<_> = contents.match_indices(word).collect();
     println!("{:?}, {} instances", v, v.len());
 }
 
-pub fn size(args: &[String]) -> (){
-    let filename = &args[2];
+pub fn size(args: &[&str]) -> (){
+    let filename = &args[1];
     let file = fs::File::open(filename)
         .expect("something went wrong when trying to open the file");
     let size = file.metadata().unwrap().len();
@@ -91,8 +91,8 @@ pub fn size(args: &[String]) -> (){
     println!("{} is {} bytes", filename, size);
 }
 
-pub fn remove_file(args: &[String]) -> (){
-    let filename = &args[2];
+pub fn remove_file(args: &[&str]) -> (){
+    let filename = &args[1];
     fs::remove_file(filename).expect("something went wrong with deleting the file");
     println!("{} was removed.", filename);
 }
@@ -114,9 +114,9 @@ pub fn man_page() -> (){
     (3) Find word in files.
     (4) Print the word with indexes of files it is present in.
  */
-pub fn finder_across_all(args: &[String]) -> (){
-    let filename = &args[2];
-    let word = &args[3];
+pub fn finder_across_all(args: &[&str]) -> (){
+    let filename = &args[1];
+    let word = &args[2];
     let contents = fs::read_to_string(filename)
         .expect("something went wrong with opening the file");
     let mut i = 0;
