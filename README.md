@@ -18,6 +18,7 @@ In order to use the program, simply download/clone the code into your preferred 
 | cargo run size `<filename>` |finds the size of a file|
 | cargo run rm `<filename>` |removes/deletes a file|
 | cargo run oW `<filename>` |overwrites contents of a file with user defined location|
+| cargo run man |overwrites contents of a file with user defined location|
 
 Note that **`rustup`** needs to be installed on the device before these commands can be executed.
 
