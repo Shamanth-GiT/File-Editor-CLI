@@ -3,6 +3,8 @@
 ## Description
 This project can be categorized as a mini-shell service for editing files. The functionalities of the program allow users to read files, write to files, find instances of words, create files, and remove files. Additionally, the program outputs an inverted index for an input file with file names.
 
+Also, note that the documentation below is primarily made for Linux-like OS.
+
 ## Installing `rustup`
 For Unix-like OS: `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
 
