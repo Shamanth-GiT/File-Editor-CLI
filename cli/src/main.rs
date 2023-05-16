@@ -1,5 +1,3 @@
-mod lib;
-
 use std::env; // used to extract the arguments from cli
 
 fn main() {
@@ -20,6 +18,7 @@ fn main() {
         "size" => lib::size(&args),
         "rm" => lib::remove_file(&args),
         "oW" => lib::over_write_content(&args),
-        _ => println!("something went wrong")
+        "man" => lib::man_page(),
+        _ => println!("something went wrong, please check the man page with: cargo run man")
     }
 }

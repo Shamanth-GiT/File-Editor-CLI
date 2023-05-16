@@ -96,3 +96,14 @@ pub fn remove_file(args: &[String]) -> (){
     fs::remove_file(filename).expect("something went wrong with deleting the file");
     println!("{} was removed.", filename);
 }
+
+pub fn man_page() -> (){
+    println!("cargo run R <filename>: reads the contents of a file");
+    println!("cargo run W <filename>: writes to a file (will create the file if it doesn't exist or append to a file if it does exist)");
+    println!("cargo run C <filename>: creates a file");
+    println!("cargo run find <filename> <query>: finds all instances of query word in file");
+    println!("cargo run size <filename>: finds the size of a file");
+    println!("cargo run rm <filename>: removes/deletes a file");
+    println!("cargo run oW <filename>: overwrites contents of a file with user defined location");
+    println!("cargo run man: overwrites contents of a file with user defined location");
+}
