@@ -9,6 +9,8 @@ For Windows download and run: https://static.rust-lang.org/rustup/dist/i686-pc-w
 
 In order to use the program, simply download/clone the code into your preferred text editor and use the terminal:
 
+First we will need to change directory into our program: `cd cli`
+
 | Command | Description |
 | --- | --- |
 | cargo run R `<filename>` |reads the contents of a file|
