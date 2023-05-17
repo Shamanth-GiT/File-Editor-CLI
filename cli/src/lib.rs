@@ -4,6 +4,17 @@ use std::io::Write;
 use std::path::Path;
 use std::io::prelude::*;
 use std::io::SeekFrom;
+use std::env;
+
+pub fn parse_args() -> String{
+    print!("> ");
+    io::stdout().flush().unwrap();
+
+    let mut input = String::new();
+    io::stdin().read_line(&mut input).unwrap();
+
+    input
+}
 
 pub fn create_file(args: &[&str]) -> (){
     let filename = &args[1];
@@ -97,17 +108,6 @@ pub fn remove_file(args: &[&str]) -> (){
     println!("{} was removed.", filename);
 }
 
-pub fn man_page() -> (){
-    println!("cargo run R <filename>: reads the contents of a file");
-    println!("cargo run W <filename>: writes to a file (will create the file if it doesn't exist or append to a file if it does exist)");
-    println!("cargo run C <filename>: creates a file");
-    println!("cargo run find <filename> <query>: finds all instances of query word in file");
-    println!("cargo run size <filename>: finds the size of a file");
-    println!("cargo run rm <filename>: removes/deletes a file");
-    println!("cargo run oW <filename>: overwrites contents of a file with user defined location");
-    println!("cargo run man: overwrites contents of a file with user defined location");
-}
-
 /*
     (1) Read the input file.
     (2) Read the files with file names included in the input file.
@@ -130,4 +130,53 @@ pub fn finder_across_all(args: &[&str]) -> (){
         }
         i+=1;
     }
+}
+
+/*
+pub fn mk_dir(args: &[&str]) -> (){
+    let directory_name = &args[1];
+    fs::create_dir_all(directory_name).expect("something went wrong with making the directory");
+}
+ 
+pub fn rem_dir(args: &[&str]) -> (){
+    let directory_name = &args[1];
+    fs::remove_dir(directory_name)
+        .expect("something went wrong with removing the directory, 
+                    if there are files inside you want to delete then use remrcdir");
+}
+
+pub fn rem_dir_recursive(args: &[&str]) -> (){
+    let directory_name = &args[1];
+    fs::remove_dir_all(directory_name).expect("something went wrong with removing the directory");
+}
+
+pub fn change_dir(args: &[&str]) -> (){
+    let directory_name = &args[1];
+    if String::from(".").eq(directory_name){
+        let pieces = env::current_dir();
+        if let Err(e) = env::set_current_dir() {
+            eprintln!("{}", e);
+        }
+    }
+    let root = Path::new(directory_name);
+                    if let Err(e) = env::set_current_dir(&root) {
+                        eprintln!("{}", e);
+                    }
+}
+*/
+
+pub fn pwd() -> (){
+    println!("{:?}", env::current_dir().unwrap());
+}
+
+pub fn man_page() -> (){
+    println!("R <filename>: reads the contents of a file");
+    println!("W <filename>: writes to a file (will create the file if it doesn't exist or append to a file if it does exist)");
+    println!("C <filename>: creates a file");
+    println!("find <filename> <query>: finds all instances of query word in file");
+    println!("size <filename>: finds the size of a file");
+    println!("rm <filename>: removes/deletes a file");
+    println!("oW <filename>: overwrites contents of a file with user defined location");
+    println!("pwd: print working directory");
+    println!("man: overwrites contents of a file with user defined location");
 }
