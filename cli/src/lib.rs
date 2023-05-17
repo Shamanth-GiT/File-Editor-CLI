@@ -7,7 +7,7 @@ use std::io::SeekFrom;
 use std::env;
 
 pub fn parse_args() -> String{
-    print!("> ");
+    print!(">> ");
     io::stdout().flush().unwrap();
 
     let mut input = String::new();
