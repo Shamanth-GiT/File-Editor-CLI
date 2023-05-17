@@ -29,6 +29,7 @@ To access the shell: `cargo run`
 | oW `<filename>` |overwrites contents of a file with user defined location|
 | man |presents the manual|
 | findAcr `<filename>` `<query>` |finds a word across multiple files given an input file|
+| pwd |print working directory|
 
 Note that **`rustup`** needs to be installed on the device before these commands can be executed.
 
