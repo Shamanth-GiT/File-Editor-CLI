@@ -16,17 +16,20 @@ In order to use the program, simply download/clone the code into your preferred 
 
 First we will need to change directory into our program: `cd cli`
 
+To access the shell: `cargo run`
+
 | Command | Description |
 | --- | --- |
-| cargo run R `<filename>` |reads the contents of a file|
-| cargo run W `<filename>` |writes to a file (will create the file if it doesn't exist or append to a file if it does exist)|
-| cargo run C `<filename>` |creates a file|
-| cargo run find `<filename>` `<query>`|finds all instances of query word in file|
-| cargo run size `<filename>` |finds the size of a file|
-| cargo run rm `<filename>` |removes/deletes a file|
-| cargo run oW `<filename>` |overwrites contents of a file with user defined location|
-| cargo run man |presents the manual|
-| cargo run findAcr `<filename>` `<query>` |finds a word across multiple files given an input file|
+| R `<filename>` |reads the contents of a file|
+| W `<filename>` |writes to a file (will create the file if it doesn't exist or append to a file if it does exist)|
+| C `<filename>` |creates a file|
+| find `<filename>` `<query>`|finds all instances of query word in file|
+| size `<filename>` |finds the size of a file|
+| rm `<filename>` |removes/deletes a file|
+| oW `<filename>` |overwrites contents of a file with user defined location|
+| man |presents the manual|
+| findAcr `<filename>` `<query>` |finds a word across multiple files given an input file|
+| pwd |print working directory|
 
 Note that **`rustup`** needs to be installed on the device before these commands can be executed.
 
