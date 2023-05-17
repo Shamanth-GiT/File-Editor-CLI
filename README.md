@@ -1,5 +1,9 @@
 # Rust-mini-Shell
 
+## Presentation
+Slides: https://drive.google.com/file/d/16_xF_Sjz-JHFH-1b8B1hBfIFZm9NP39P/view?usp=share_link
+Video: 
+
 ## Description
 This project can be categorized as a mini-shell service for editing files. The functionalities of the program allow users to read files, write to files, find instances of words, create files, and remove files.
 
