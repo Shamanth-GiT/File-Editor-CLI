@@ -25,6 +25,7 @@ To access the shell: `cargo run`
 
 | Command | Description |
 | --- | --- |
+| quit |quits the shell|
 | R `<filename>` |reads the contents of a file|
 | W `<filename>` |writes to a file (will create the file if it doesn't exist or append to a file if it does exist)|
 | C `<filename>` |creates a file|
