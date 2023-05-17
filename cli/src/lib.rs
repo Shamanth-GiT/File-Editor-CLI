@@ -19,17 +19,24 @@ pub fn parse_args() -> String{
 pub fn create_file(args: &[&str]) -> (){
     let filename = &args[1];
 
-    fs::File::create(filename)
-            .expect("something went wrong with creating the file ");
-
+    let file = fs::File::create(filename);
+    match file{
+        #[allow(unused_variables)]
+        Ok(file) => {},
+        #[allow(unused_variables)]
+        Err(err) => {println!("something went wrong in creating file {}", filename);}
+    };
     println!("File has been created with the name: {}", filename);   
 }
 
 pub fn read_file(args: &[&str]) -> (){
     let filename = &args[1];
-    let contents = fs::read_to_string(filename)
-        .expect("something went wrong with opening the file");
-    println!("{}", contents);
+    let contents = fs::read_to_string(filename);
+    match contents {
+        Ok(contents)=> print!("{}", contents),
+        #[allow(unused_variables)]
+        Err(err)=> println!("trouble opening file {}", filename)
+    };
 }
 
 pub fn write_to_file(args: &[&str]) -> (){
@@ -41,18 +48,24 @@ pub fn write_to_file(args: &[&str]) -> (){
     io::stdin().read_line(&mut msg).unwrap();
 
     if rs == true{
-        let mut file = fs::OpenOptions::new()
-        .append(true)
-        .open(filename)
-        .expect("cannot open file");
+        let file = fs::OpenOptions::new()
+            .append(true)
+            .open(filename);
+        match file{
+            Ok(mut file) => {file.write(msg.as_bytes()).unwrap();},
+            #[allow(unused_variables)]
+            Err(err) => {println!("unable to write to file {}", filename);}
+        };
         
-        file.write(msg.as_bytes()).expect("failed to write to file");
     }
     else {
-        let mut file = fs::File::create(filename)
-            .expect("something went wrong with opening the file for writing");
+        let file = fs::File::create(filename);
 
-        file.write(msg.as_bytes()).expect("writing failed");
+        match file{
+            Ok(mut file) => {file.write(msg.as_bytes()).unwrap();},
+            #[allow(unused_variables)]
+            Err(err) => {println!("unable to write to file {}", filename);}
+        };
     }
     println!("message appended to file");
 }
@@ -72,40 +85,61 @@ pub fn over_write_content(args: &[&str]) -> (){
     num = input.trim().parse().unwrap();
     
     if rs == true{
-        let mut file = fs::OpenOptions::new()
+        let file = fs::OpenOptions::new()
         .read(true)
         .write(true)
         .create(true)
-        .open(filename)
-        .unwrap();
+        .open(filename);
         
-        file.seek(SeekFrom::Start(num)).unwrap();
-        file.write(msg.as_bytes()).expect("failed to write to file");
+        match file{
+            Ok(mut file) => {
+                file.seek(SeekFrom::Start(num)).unwrap();
+                file.write(msg.as_bytes()).expect("failed to write to file");
+                println!("message has been written to file {}", filename);
+            },
+            #[allow(unused_variables)]
+            Err(err) => {println!("unable to write to file {}", filename);}
+        };
     }
 }
 
 pub fn find_all_instances(args: &[&str]) -> (){
     let filename = &args[1];
     let word = &args[2];
-    let contents = fs::read_to_string(filename)
-        .expect("something went wrong with opening the file");
-    let v: Vec<_> = contents.match_indices(word).collect();
-    println!("{:?}, {} instances", v, v.len());
+    let contents = fs::read_to_string(filename);
+    match contents{
+        Ok(contents) => {
+            let v: Vec<_> = contents.match_indices(word).collect();
+            println!("{:?}, {} instances", v, v.len());
+        },
+        #[allow(unused_variables)]
+        Err(err) => {println!("there was some issue with opening the file {}", filename);}
+    };
 }
 
 pub fn size(args: &[&str]) -> (){
     let filename = &args[1];
-    let file = fs::File::open(filename)
-        .expect("something went wrong when trying to open the file");
-    let size = file.metadata().unwrap().len();
+    let file = fs::File::open(filename);
 
-    println!("{} is {} bytes", filename, size);
+    match file{
+        Ok(file) => {
+            let size = file.metadata().unwrap().len();
+            println!("{} is {} bytes", filename, size);
+        },
+        #[allow(unused_variables)]
+        Err(err) => {println!("unable to open the file {}", filename);}
+    };
 }
 
 pub fn remove_file(args: &[&str]) -> (){
     let filename = &args[1];
-    fs::remove_file(filename).expect("something went wrong with deleting the file");
-    println!("{} was removed.", filename);
+    let file = fs::remove_file(filename);
+    match file{
+        #[allow(unused_variables)]
+        Ok(file) => {println!("{} was removed.", filename);},
+        #[allow(unused_variables)]
+        Err(err) => {println!("file {} could not be removed", filename);}
+    };
 }
 
 /*
@@ -117,53 +151,33 @@ pub fn remove_file(args: &[&str]) -> (){
 pub fn finder_across_all(args: &[&str]) -> (){
     let filename = &args[1];
     let word = &args[2];
-    let contents = fs::read_to_string(filename)
-        .expect("something went wrong with opening the file");
-    let mut i = 0;
-    print!("{}: ", word);
-    for file in contents.split_whitespace(){
-        let in_contents = fs::read_to_string(file)
-            .expect("something went wrong with opening the file");
-        let v: Vec<_> = in_contents.match_indices(word).collect();
-        if v.len() > 0 {
-            print!("{} ", i);
-        }
-        i+=1;
-    }
-}
-
-/*
-pub fn mk_dir(args: &[&str]) -> (){
-    let directory_name = &args[1];
-    fs::create_dir_all(directory_name).expect("something went wrong with making the directory");
-}
- 
-pub fn rem_dir(args: &[&str]) -> (){
-    let directory_name = &args[1];
-    fs::remove_dir(directory_name)
-        .expect("something went wrong with removing the directory, 
-                    if there are files inside you want to delete then use remrcdir");
-}
-
-pub fn rem_dir_recursive(args: &[&str]) -> (){
-    let directory_name = &args[1];
-    fs::remove_dir_all(directory_name).expect("something went wrong with removing the directory");
-}
-
-pub fn change_dir(args: &[&str]) -> (){
-    let directory_name = &args[1];
-    if String::from(".").eq(directory_name){
-        let pieces = env::current_dir();
-        if let Err(e) = env::set_current_dir() {
-            eprintln!("{}", e);
-        }
-    }
-    let root = Path::new(directory_name);
-                    if let Err(e) = env::set_current_dir(&root) {
-                        eprintln!("{}", e);
+    let contents = fs::read_to_string(filename);
+    match contents{
+        Ok(contents) => {
+            let mut i = 0;
+            print!("{}: ", word);
+            for file in contents.split_whitespace(){
+                let in_contents = fs::read_to_string(file);
+                match in_contents{
+                    Ok(in_contents) => {
+                        let v: Vec<_> = in_contents.match_indices(word).collect();
+                        if v.len() > 0 {
+                            print!("{} ", i);
+                        }
+                        i+=1;
+                    },
+                    #[allow(unused_variables)]
+                    Err(err) => {
+                        println!("there was some issue with opening an inner file with index {}", i);
+                        break;
                     }
+                };
+            }
+        },
+        #[allow(unused_variables)]
+        Err(err) => {println!("there was some issue with opening the file {}", filename);}
+    };
 }
-*/
 
 pub fn pwd() -> (){
     println!("{:?}", env::current_dir().unwrap());
